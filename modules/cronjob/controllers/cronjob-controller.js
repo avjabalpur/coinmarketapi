@@ -6,7 +6,7 @@ var reportController = require('../../report/controllers/report-controller');
 var _ = require('lodash');
 
 module.exports.cronJobStart = function (){
-	cron.schedule('1 * * * * *', function () {
+	cron.schedule('25 * * * * *', function () {
 		console.log("started");
 		getCoinDetails();
 	});
@@ -26,19 +26,22 @@ function getCoinDetails(){
 			else{
 				console.log("new data saving");
 				coinSchema.collection.insert(response.data);
-				axios.get('http://localhost:3001/api/range')
+				axios.get('https://xcd-coin-market.herokuapp.com/api/range')
 				.then(result => {
 					console.log("mininin");
 					//console.log(result.data.result[0].min);
 					_.forEach(response.data, function(data){
-						if(data.percent_change_24h < result.data.result[0].min || data.percent_change_24h > result.data.result[0].max){
+
+						var range = _.first(_.get(result, data.result));
+
+						if(data.percent_change_24h < _.get(range, 'min') || data.percent_change_24h >_.get(range, 'max')){
 							var body = {
-								name: response.data.name,
+								name: data.name,
 							    date: new Date(),
-							    price: response.data.price_usd,
-							    change_rate: response.data.percent_change_24h,
-							    market_cap: response.data.market_cap_usd,
-							    action: data.percent_change_24h < 5 ? 'Buy' : 'Sell'
+							    price: data.price_usd,
+							    change_rate: data.percent_change_24h,
+							    market_cap: data.market_cap_usd,
+							    action: +data.percent_change_24h < _.get(range, 'min')  ? 'Buy' : 'Sell'
 							}
 							reportController.buySellCoins({req: body}, {});
 						}
