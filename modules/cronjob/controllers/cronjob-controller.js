@@ -43,7 +43,7 @@ function getCoinDetails(){
 							    market_cap: data.market_cap_usd,
 							    action: +data.percent_change_24h < _.get(range, 'min')  ? 'Buy' : 'Sell'
 							}
-							reportController.buySellCoins({req: {body : body}}, {});
+							reportController.buySellCoins({body : body}, {});
 						}
 					})
 					console.log("new data saved");
