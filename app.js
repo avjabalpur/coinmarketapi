@@ -32,7 +32,7 @@ module.exports.start = function(callback) {
 
  		var routes = require('./route');
  		routes.setup(app);
-    	app.listen(app.listen(process.env.PORT || port), function () {
+    	app.listen(process.env.PORT || port, function () {
     		console.log("Started server on " + port);
     	});
 	});
