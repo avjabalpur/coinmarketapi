@@ -1,0 +1,6 @@
+{
+	"appName" : "coin marken api",
+	"hostingPort" : 3002,
+
+	"logFileUrl" : "api.log"
+}

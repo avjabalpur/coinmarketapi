@@ -2,13 +2,15 @@
 
 var mongoose = require('./mongoose');
 var express = require('express');
+var config = require('./config/config.json');
 var cronJob = require('./modules/cronjob/controllers/cronjob-controller');
-var port = 3001;
 var app = express();
+var log = require('./logger/logger');
 
 // Initialize Models
 module.exports.init = function init(callback) {
 	mongoose.connect(function (db) {
+		log.error('--- connected to mongo db---')
 		cronJob.cronJobStart();
 		callback()
 	});
@@ -32,8 +34,8 @@ module.exports.start = function(callback) {
 
  		var routes = require('./route');
  		routes.setup(app);
-    	app.listen(process.env.PORT || port, function () {
-    		console.log("Started server on " + port);
+    	app.listen(process.env.PORT || config.hostingPort, function () {
+    		console.log("Started server on " + config.hostingPort);
     	});
 	});
 };
