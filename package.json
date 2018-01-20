@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "mocha D:\\Work\\coinmarketapi\\tests\\server.test.js",
+    "test": "mocha E:\\work\\coinmarketapi\\tests\\app.test.js",
     "start": "node server"
   },
   "author": "",
