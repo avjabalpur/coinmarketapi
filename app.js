@@ -18,6 +18,9 @@ module.exports.init = function init(callback) {
 
 module.exports.start = function(callback) {
 	var _this = this;
+
+	console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!aa gaya')
+
 	_this.init(function () {
 		
 		app.use(express.bodyParser());
