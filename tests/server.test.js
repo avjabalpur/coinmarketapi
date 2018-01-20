@@ -7,30 +7,37 @@ var proxyquire =  require('proxyquire')
 
 describe("Server test cases", function() {
 	var mockApp, mockLogger;
-	var app, logger, server,instence;
+	var app, logger, server;
 	var callback = function(){};
-	beforeEach(function(done) {
+	beforeEach(function() {
 		console.log('running block for beforeEach');
 		app = {
-			init : function(){},
-			start : function(){}
+			init : callback,
+			start : callback
 		}
-		mockApp = sinon.stub(app);
+
+		logger = {
+			info : callback
+		}
 		
-		
-		instence = proxyquire
+		server = proxyquire
 	    .noCallThru()
 	    .load('../server', {
-	        './app' : app
+	        './app' : app,
+	        './logger/logger' : logger
 	       
 	    });
 
-	   	done();
+	    mockApp = sinon.stub(app);
 	});
 
 	 describe('setting app start', function(){
-	  	it('should have a file name as server.js', function(done){
-	  		done();
+	  	it('it exits', function(){
+	  		expect(server).to.exist;
+	  	})
+
+	  	it('it object', function(){
+	  		expect(server).to.be.an('object');
 	  	})
 	 })
 
