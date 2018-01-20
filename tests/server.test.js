@@ -7,8 +7,8 @@ var proxyquire =  require('proxyquire')
 
 describe("Server test cases", function() {
 	var mockApp, mockLogger;
-	var app, logger, server;
-	var callback = sinon.spy();
+	var app, logger, server,instence;
+	var callback = function(){};
 	beforeEach(function(done) {
 		console.log('running block for beforeEach');
 		app = {
@@ -17,14 +17,13 @@ describe("Server test cases", function() {
 		}
 		mockApp = sinon.stub(app);
 		
-
-		server = proxyquire('../server',{
-			'../app' : app
-		})
-
-		mockApp.start.returns(callback);
-
-		console.log('&********************', server)
+		
+		instence = proxyquire
+	    .noCallThru()
+	    .load('../server', {
+	        './app' : app
+	       
+	    });
 
 	   	done();
 	});
